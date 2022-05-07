@@ -2,8 +2,9 @@
  * @format
  */
 
-import {AppRegistry, PermissionsAndroid} from 'react-native';
+import {AppRegistry} from 'react-native';
 import App from './App';
+import React from 'react';
 import {name as appName} from './app.json';
 import RNCallKeep from 'react-native-callkeep';
 import messaging from '@react-native-firebase/messaging';
@@ -29,10 +30,17 @@ const options = {
     },
   },
 };
+function HeadlessCheck({isHeadless}) {
+  if (isHeadless) {
+    // App has been launched in the background by iOS, ignore
+    return null;
+  }
+  return <App />;
+}
 
 RNCallKeep.setup(options);
 RNCallKeep.setAvailable(true);
 // Register background handler
 messaging().setBackgroundMessageHandler(BackgroundHandler);
 
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent(appName, () => HeadlessCheck);
