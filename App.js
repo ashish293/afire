@@ -35,7 +35,7 @@ const App = () => {
   }, []);
   return (
     <View>
-      <Text>App</Text>
+      <Text>Change</Text>
     </View>
   );
 };
